@@ -1,0 +1,115 @@
+<div class="container">
+  <div class="row justify-content-between">
+    <div class="col-6">
+      <h2 class="employee-list__title">Listagem de Funcionários</h2>
+    </div>
+    <button
+      class="col-6 employee-list__action-button align-self-center"
+      routerLink="/employee/new"
+    >
+      Novo
+    </button>
+  </div>
+  <form class="needs-validation" novalidate [formGroup]="form">
+    <div class="row justify-content-between align-items-end">
+      <div class="col-12 col-lg-10 col-xl-11">
+        <div class="row">
+          <div class="col-12 col-lg-4 d-flex flex-column">
+            <label class="employee-list__input-label">Nome</label>
+            <input
+              type="text"
+              class="employee-list__input form-control"
+              formControlName="name"
+            />
+          </div>
+          <div class="col-12 col-lg-4 d-flex flex-column">
+            <label class="employee-list__input-label">CPF</label>
+            <input
+              type="text"
+              class="employee-list__input form-control"
+              formControlName="cpf"
+              [ngClass]="{ 'is-invalid': !form.valid }"
+              placeholder="000.000.000-00"
+              mask="CPF_CNPJ"
+            />
+            <div class="invalid-feedback">
+              CPF está inválido.
+            </div>
+          </div>
+          <div class="col-12 col-lg-4 d-flex flex-column">
+            <label class="employee-list__input-label">Data Contratação</label>
+            <input
+              type="text"
+              class="employee-list__input form-control"
+              formControlName="hireDate"
+            />
+          </div>
+        </div>
+      </div>
+      <button class="employee-list__action-button col-12 col-lg-2 col-xl-1">
+        Filtrar
+      </button>
+    </div>
+  </form>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Nome</th>
+        <th scope="col">CPF</th>
+        <th scope="col">Empresa</th>
+        <th scope="col">Cargo</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of employeeData" class="employee-list__table-row">
+        <th scope="row">{{ employee.id }}</th>
+        <td>{{ employee.name }}</td>
+        <td><span mask="CPF_CNPJ">{{ employee.cpf }}</span></td>
+        <td>{{ employee.company.name }}</td>
+        <td>{{ employee.position.description }}</td>
+        <td align="right">
+          <div class="dropdown">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenu2"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Mais opções
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+              <button
+                class="dropdown-item"
+                type="button"
+                routerLink="/employee/edit"
+              >
+                Editar
+              </button>
+              <button class="dropdown-item" type="button">
+                Excluir
+              </button>
+              <button
+                class="dropdown-item"
+                type="button"
+                routerLink="/employee/edit-company"
+              >
+                Vincular Empresa
+              </button>
+              <button
+                class="dropdown-item"
+                type="button"
+                routerLink="/employee/edit-position"
+              >
+                Vincular Cargo
+              </button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

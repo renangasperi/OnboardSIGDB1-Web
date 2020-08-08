@@ -1,0 +1,5 @@
+<ul class="nav nav-tabs nav-fill">
+  <li class="nav-item header__list-item" *ngFor="let tab of tabs">
+    <a class="nav-link" (click)="handleTabChange(tab)" [routerLink]="tab.route" [class.active]="currentTab === tab">{{ tab.name }}</a>
+  </li>
+</ul>

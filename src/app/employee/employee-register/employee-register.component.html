@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="row justify-content-between">
+    <h2 class="employee-register__title">{{ title }}</h2>
+  </div>
+  <form>
+    <div class="row">
+      <div class="col-12 d-flex flex-column">
+        <label for="nome" class="employee-register__input-label">Nome</label>
+        <input type="text" class="employee-register__input" id="nome" />
+      </div>
+      <div class="col-6 col-md-9 d-flex flex-column mt-3">
+        <label for="cpf" class="employee-register__input-label">CPF</label>
+        <input
+          type="text"
+          class="employee-register__input"
+          id="cpf"
+          placeholder="000.000.000-00"
+        />
+      </div>
+      <div class="col-6 col-md-3 d-flex flex-column mt-3">
+        <label for="hireDate" class="employee-register__input-label"
+          >Data Contratação</label
+        >
+        <input
+          type="date"
+          class="employee-register__input"
+          id="hireDate"
+        />
+      </div>
+    </div>
+    <button type="button" class="btn btn-primary mr-2 mt-3">Salvar</button>
+    <button type="button" class="btn btn-dark mt-3">Voltar</button>
+  </form>
+</div>

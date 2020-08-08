@@ -1,0 +1,107 @@
+<div class="container">
+  <div class="row justify-content-between">
+    <div class="col-6">
+      <h2 class="company-list__title">Listagem de Empresas</h2>
+    </div>
+    <button
+      class="col-6 company-list__action-button align-self-center"
+      routerLink="/company/new"
+    >
+      Novo
+    </button>
+  </div>
+  <form class="needs-validation" novalidate [formGroup]="form">
+    <div class="row justify-content-between align-items-end">
+      <div class="col-12 col-lg-10 col-xl-11">
+        <div class="row">
+          <div class="col-12 col-lg-4 d-flex flex-column">
+            <label class="company-list__input-label">Nome</label>
+            <input
+              type="text"
+              class="company-list__input form-control"
+              formControlName="name"
+            />
+          </div>
+          <div class="col-12 col-lg-4 d-flex flex-column">
+            <label class="company-list__input-label">CNPJ</label>
+            <input
+              type="text"
+              class="company-list__input form-control"
+              formControlName="cnpj"
+              [ngClass]="{'is-invalid': !form.valid}"
+              placeholder="00.000.000/0000-00"
+              mask="CPF_CNPJ"
+            />
+            <div class="invalid-feedback">
+              CNPJ está inválido.
+            </div>
+          </div>
+          <div class="col-12 col-lg-4 d-flex flex-column">
+            <label class="company-list__input-label">Data Fundação</label>
+            <input
+              type="date"
+              class="company-list__input form-control"
+              formControlName="foundationDate"
+            />
+          </div>
+        </div>
+      </div>
+      <button
+        type="submit"
+        class="company-list__action-button col-12 col-lg-2 col-xl-1"
+        (click)="getCompany(form.value)"
+      >
+        Filtrar
+      </button>
+    </div>
+  </form>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Nome</th>
+        <th scope="col">CNPJ</th>
+        <th scope="col">Data Fundação</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let company of companyData" class="company-list__table-row">
+        <th scope="row">{{ company.id }}</th>
+        <td>{{ company.name }}</td>
+        <td mask="CPF_CNPJ">{{ company.cnpj }}</td>
+        <td>{{ company.foundationDate }}</td>
+        <td align="right">
+          <div class="dropdown">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenu2"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Mais opções
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+              <button
+                class="dropdown-item"
+                type="button"
+                [routerLink]="['/company/edit', company.id]"
+              >
+                Editar
+              </button>
+              <button
+                class="dropdown-item"
+                type="button"
+                (click)="deleteCompanyData(company)"
+              >
+                Excluir
+              </button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="row justify-content-between">
+    <div class="col-6">
+      <h2 class="position-list__title">Listagem de Cargos</h2>
+    </div>
+    <button
+      class="col-6 position-list__action-button align-self-center"
+      routerLink="/position/new"
+    >
+      Novo
+    </button>
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Descrição</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let position of mock" class="position-list__table-row">
+        <th scope="row">{{ position.id }}</th>
+        <td>{{ position.description }}</td>
+        <td align="right">
+          <div class="dropdown">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenu2"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Mais opções
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+              <button
+                class="dropdown-item"
+                type="button"
+                routerLink="/position/edit"
+              >
+                Editar
+              </button>
+              <button class="dropdown-item" type="button">
+                Excluir
+              </button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

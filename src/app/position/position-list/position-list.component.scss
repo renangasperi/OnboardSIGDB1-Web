@@ -1,0 +1,21 @@
+.position-list__title {
+  padding: 0;
+}
+.position-list__action-button {
+  max-width: 95px;
+  border-radius: 5px;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #189ad3;
+  border: none;
+}
+
+.position-list__action-button:hover {
+  background-color: #107dac;
+}
+
+.position-list__table-row {
+  vertical-align: middle;
+}

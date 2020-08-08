@@ -1,0 +1,86 @@
+{
+  "company": [
+    {
+      "id": "1",
+      "name": "db1",
+      "cnpj": "39488392000115",
+      "foundationDate": "1996-07-26"
+    },
+    {
+      "id": "2",
+      "name": "outra",
+      "cnpj": "93649632000161",
+      "foundationDate": "1996-07-22"
+    },
+    {
+      "id": "3",
+      "name": "outra",
+      "cnpj": "71490720000120",
+      "foundationDate": "1996-07-21"
+    }
+  ],
+  "employee": [
+    {
+      "id": "1",
+      "name": "db1",
+      "cpf": "86356677007",
+      "company": {
+        "id": "1",
+        "name": "db1",
+        "cnpj": "39488392000115",
+        "foundationDate": "26/07/1996"
+      },
+      "hireDate": "26/12/2014",
+      "position": {
+        "id": "1",
+        "description": "desenvolvedor"
+      }
+    },
+    {
+      "id": "2",
+      "name": "db1",
+      "cpf": "89991675000",
+      "company": {
+        "id": "2",
+        "name": "db1",
+        "cnpj": "93649632000161",
+        "foundationDate": "26/07/1996"
+      },
+      "hireDate": "26/12/2014",
+      "position": {
+        "id": "1",
+        "description": "desenvolvedor"
+      }
+    },
+    {
+      "id": "3",
+      "name": "db1",
+      "cpf": "64233832002",
+      "company": {
+        "id": "3",
+        "name": "db1",
+        "cnpj": "71490720000120",
+        "foundationDate": "26/07/1996"
+      },
+      "hireDate": "26/12/2014",
+      "position": {
+        "id": "1",
+        "description": "desenvolvedor"
+      }
+    }
+  ],
+  "position": [
+    {
+      "id": "1",
+      "description": "desenvolvedor"
+    },
+    {
+      "id": "2",
+      "description": "frentista"
+    },
+    {
+      "id": "3",
+      "description": "cara das tela"
+    }
+  ]
+}
