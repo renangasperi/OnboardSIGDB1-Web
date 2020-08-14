@@ -22,8 +22,15 @@ export class CompanyService {
     return this.http.get<Company>(`${this.API}?id=${id}`)
   }
 
+  createNewCompany(company: Company) {
+    return this.http.post(this.API, company);
+  }
+
+  editCompany(company: Company) {
+    return this.http.put(`${this.API}/${company.id}`, company);
+  }
+
   deleteCompany(companyId: string) {
-    console.log('aaaaaaaaaaaau');
     return this.http.delete(`${this.API}/${companyId}`);
   }
 
@@ -41,8 +48,9 @@ export class CompanyService {
   }
 
   static cnpjValidate(control: AbstractControl) {
-    console.log('aaaaaaaaaaaa')
     const { value } = control;
+
+    if (!value) return null;
 
     let cnpj = value.replace(/[^\d]+/g, '');
 

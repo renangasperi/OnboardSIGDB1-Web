@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Employee } from 'src/models/employee/employee.model';
 import { Observable } from 'rxjs/internal/Observable';
 import { EmployeeFilter } from 'src/models/employee/employee-filter.model';
 import { AbstractControl } from '@angular/forms';
+import { Employee } from 'src/models/employee/employee.model';
+import { Company } from 'src/models/company/company.model';
+import { Position } from 'src/models/position/position.model';
 
 @Injectable({
   providedIn: 'root',
@@ -19,11 +21,39 @@ export class EmployeeService {
   }
 
   getEmployeeById(id: string): Observable<Employee> {
-    return this.http.get<Employee>(`${this.API}?id=${id}`)
+    return this.http.get<Employee>(`${this.API}?id=${id}`);
+  }
+
+  createNewEmployee(employee: Employee) {
+    const body = {
+      ...employee,
+      company: { id: '', name: '' },
+      position: { id: '', description: ''}
+    }
+    return this.http.post(this.API, body);
+  }
+
+  editEmployee(employee: Employee) {
+    return this.http.put(`${this.API}/${employee.id}`, employee);
+  }
+
+  editCompany(employee: Employee, company: Company) {
+    const body = {
+      ...employee,
+      company: { id: company.id, name: company.name },
+    }
+    return this.http.put(`${this.API}/${employee.id}`, body);
+  }
+
+  editPosition(employee: Employee, position: Position) {
+    const body = {
+      ...employee,
+      position: { id: position.id, description: position.description },
+    }
+    return this.http.put(`${this.API}/${employee.id}`, body);
   }
 
   deleteEmployee(employeeId: string) {
-    console.log('aaaaaaaaaaaau');
     return this.http.delete(`${this.API}/${employeeId}`);
   }
 
@@ -41,32 +71,41 @@ export class EmployeeService {
   }
 
   static cpfValidate(control: AbstractControl) {
-    console.log('aaaaaaaaaaaa')
     const { value } = control;
 
-    let cnpj = value.replace(/[^\d]+/g, '');
+    if (!value) return null;
 
-    let t = cnpj.length - 2,
-      d = cnpj.substring(t),
-      d1 = parseInt(d.charAt(0)),
-      d2 = parseInt(d.charAt(1)),
-      calc = (x) => {
-        let n = cnpj.substring(0, x),
-          y = x - 7,
-          value = 0,
-          r = 0;
+    let cpf = value.replace(/[\s.-]*/gim, '');
+    if (
+      !cpf ||
+      cpf.length != 11 ||
+      cpf == '00000000000' ||
+      cpf == '11111111111' ||
+      cpf == '22222222222' ||
+      cpf == '33333333333' ||
+      cpf == '44444444444' ||
+      cpf == '55555555555' ||
+      cpf == '66666666666' ||
+      cpf == '77777777777' ||
+      cpf == '88888888888' ||
+      cpf == '99999999999'
+    ) {
+      return { invalidCnpj: true };
+    }
+    var soma = 0;
+    var resto;
+    for (var i = 1; i <= 9; i++)
+      soma = soma + parseInt(cpf.substring(i - 1, i)) * (11 - i);
+    resto = (soma * 10) % 11;
+    if (resto == 10 || resto == 11) resto = 0;
+    if (resto != parseInt(cpf.substring(9, 10))) return { invalidCnpj: true };
+    soma = 0;
+    for (var i = 1; i <= 10; i++)
+      soma = soma + parseInt(cpf.substring(i - 1, i)) * (12 - i);
+    resto = (soma * 10) % 11;
+    if (resto == 10 || resto == 11) resto = 0;
+    if (resto != parseInt(cpf.substring(10, 11))) return { invalidCnpj: true };
 
-        for (let i = x; i >= 1; i--) {
-          value += n.charAt(x - i) * y--;
-          if (y < 2) y = 9;
-        }
-
-        r = 11 - (value % 11);
-        return r > 9 ? 0 : r;
-      };
-
-    const result = calc(t) === d1 && calc(t + 1) === d2;
-
-    return result ? null : { invalidCnpj: true };
+    return null;
   }
 }

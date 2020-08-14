@@ -2,33 +2,56 @@
   <div class="row justify-content-between">
     <h2 class="employee-register__title">{{ title }}</h2>
   </div>
-  <form>
+  <form class="needs-validation" novalidate [formGroup]="form">
     <div class="row">
       <div class="col-12 d-flex flex-column">
-        <label for="nome" class="employee-register__input-label">Nome</label>
-        <input type="text" class="employee-register__input" id="nome" />
-      </div>
-      <div class="col-6 col-md-9 d-flex flex-column mt-3">
-        <label for="cpf" class="employee-register__input-label">CPF</label>
+        <label class="employee-register__input-label">Nome</label>
         <input
           type="text"
-          class="employee-register__input"
-          id="cpf"
-          placeholder="000.000.000-00"
+          class="employee-register__input form-control"
+          [ngClass]="{ 'is-invalid': form.controls.name.invalid }"
+          formControlName="name"
         />
+        <div *ngIf="form.controls.name.invalid" class="invalid-feedback">
+          Campo Obrigatório
+        </div>
+      </div>
+      <div class="col-6 col-md-9 d-flex flex-column mt-3">
+        <label class="employee-register__input-label">CPF</label>
+        <input
+          type="text"
+          class="employee-register__input form-control"
+          formControlName="cpf"
+          [ngClass]="{ 'is-invalid': form.controls.cpf.invalid }"
+          placeholder="00.000.000/0000"
+          mask="CPF_CNPJ"
+        />
+        <div *ngIf="form.controls.cpf.invalid" class="invalid-feedback">
+          CPF está inválido.
+        </div>
       </div>
       <div class="col-6 col-md-3 d-flex flex-column mt-3">
-        <label for="hireDate" class="employee-register__input-label"
-          >Data Contratação</label
-        >
+        <label class="employee-register__input-label">Data Contratação</label>
         <input
           type="date"
-          class="employee-register__input"
-          id="hireDate"
+          class="employee-register__input form-control"
+          formControlName="hiredate"
         />
       </div>
     </div>
-    <button type="button" class="btn btn-primary mr-2 mt-3">Salvar</button>
-    <button type="button" class="btn btn-dark mt-3">Voltar</button>
+    <button
+      type="button"
+      class="btn btn-primary mr-2 mt-3"
+      (click)="handleSubmit()"
+      [disabled]="!form.valid"
+    >
+      Salvar
+    </button>
+    <button type="button" class="btn btn-dark mt-3" (click)="backRoute()">
+      Voltar
+    </button>
   </form>
+  <div class="alert alert-success" role="alert" *ngIf="alertFlag">
+    Salvo com sucesso!
+  </div>
 </div>

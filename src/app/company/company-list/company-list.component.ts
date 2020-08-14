@@ -14,7 +14,7 @@ export class CompanyListComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private service: CompanyService) {
     this.form = this.fb.group({
-      name: [''],
+      name: ['',],
       cnpj: ['', Validators.compose([CompanyService.cnpjValidate])],
       foundationDate: [''],
     });
@@ -25,6 +25,7 @@ export class CompanyListComponent implements OnInit {
   }
 
   public companyData: Company[] = [];
+  public alertFlag: boolean = false;
 
   async getCompany(filter?: CompanyFilter) {
     await this.service
@@ -34,7 +35,16 @@ export class CompanyListComponent implements OnInit {
   }
 
   deleteCompanyData(company: Company): void {
-    this.service.deleteCompany(company.id);
-    this.getCompany();
+    this.service.deleteCompany(company.id).subscribe(() => {
+      this.showAlert();
+      this.getCompany();
+    });
+  }
+
+  showAlert() {
+    this.alertFlag = true;
+    setTimeout(() => {
+      this.alertFlag = false;
+    }, 2000);
   }
 }

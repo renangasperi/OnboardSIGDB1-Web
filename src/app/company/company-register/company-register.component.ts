@@ -3,9 +3,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CompanyService } from '../company.service';
 import { Company } from 'src/models/company/company.model';
+import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-company-register',
+  selector: 'company-register',
   templateUrl: './company-register.component.html',
   styleUrls: ['./company-register.component.scss'],
 })
@@ -16,29 +17,46 @@ export class CompanyRegisterComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private service: CompanyService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private location: Location,
   ) {
     this.form = this.fb.group({
-      name: [''],
-      cnpj: ['', Validators.compose([CompanyService.cnpjValidate])],
+      name: [
+        '',
+        Validators.compose([Validators.maxLength(150), Validators.required]),
+      ],
+      cnpj: ['', Validators.compose([CompanyService.cnpjValidate, Validators.required])],
       foundationDate: [''],
     });
   }
 
+  public company: Company;
+  public title: string = '';
+  public registerType: string = '';
+  public alertFlag: boolean = false;
+
   ngOnInit(): void {
-    this.setTitleByRegisterType();
+    this.getRegisterType();
+    this.setTitle();
     this.getCompanyById();
   }
 
-  title: string = '';
+  setTitle() {
+    const titleByType = {
+      new: 'Cadastro de Empresas',
+      edit: 'Editar Empresa',
+    };
+    this.title = titleByType[this.registerType];
+  }
 
-  setTitleByRegisterType() {
+  getRegisterType() {
     const { url } = this.router;
+    const id = this.getIdFromRoute();
     if (url === '/company/new') {
-      this.title = 'Cadastro de Empresas';
+      this.registerType = 'new';
     }
-    if (url === '/company/edit') {
-      this.title = 'Editar Empresa';
+    if (url === `/company/edit/${id}`) {
+      this.registerType = 'edit';
     }
   }
 
@@ -53,8 +71,48 @@ export class CompanyRegisterComponent implements OnInit {
   getCompanyById() {
     const id = this.getIdFromRoute();
     if (!id) return;
-    this.service.getCompanyById(id).toPromise().then((resp) => {
-      console.log(resp[0]);
-    });
+    this.service
+      .getCompanyById(id)
+      .toPromise()
+      .then((resp) => {
+        this.company = resp[0];
+        this.form.get('name').setValue(this.company.name);
+        this.form.get('cnpj').setValue(this.company.cnpj);
+        this.form.get('foundationDate').setValue(this.company.foundationDate);
+      });
+  }
+
+  createNewCompany() {
+    this.service
+      .getAllCompany()
+      .toPromise()
+      .then((resp) => {
+        const companyBody = { ...this.form.value, id: resp.length + 1 };
+        this.service.createNewCompany(companyBody).subscribe();
+        this.showAlert();
+      });
+  }
+
+  editCompany() {
+    const body = { ...this.form.value, id: this.company.id };
+    this.service.editCompany(body).subscribe();
+    this.showAlert();
+  }
+
+  handleSubmit() {
+    if (this.registerType == 'new') this.createNewCompany();
+    if (this.registerType == 'edit') this.editCompany();
+  }
+
+  backRoute() {
+    this.location.back();
+  }
+
+  showAlert() {
+    this.alertFlag = true;
+    setTimeout(() => {
+      this.alertFlag = false;
+      this.backRoute();
+    }, 1500);
   }
 }

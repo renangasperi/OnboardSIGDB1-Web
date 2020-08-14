@@ -1,25 +1,49 @@
 <div class="container">
   <div class="row justify-content-between">
-    <h2 class="edit-employee-position__title">Vincular Funcionário a uma Empresa</h2>
+    <h2 class="edit-employee-position__title">
+      Vincular Funcionário a uma Empresa
+    </h2>
   </div>
-  <form>
+  <form class="needs-validation" novalidate [formGroup]="form">
     <div class="row">
       <div class="col-12 d-flex flex-column">
         <label class="edit-employee-position__input-label">Nome</label>
-        <input type="text" class="edit-employee-position__input" />
+        <input
+          type="text"
+          class="edit-employee-position__input form-control"
+          formControlName="name"
+        />
       </div>
       <div class="col-6 col-md-9 d-flex flex-column mt-3">
         <label class="edit-employee-position__input-label">Cargo</label>
         <div class="input-group mb-3">
-          <select class="form-select" id="inputGroupSelect01">
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+          <select
+            class="form-select"
+            id="inputGroupSelect01"
+            formControlName="positionId"
+          >
+            <option
+              [value]="position.id"
+              *ngFor="let position of positionData"
+              >{{ position.description }}</option
+            >
           </select>
         </div>
       </div>
     </div>
-    <button type="button" class="btn btn-primary mr-2 mt-3">Salvar</button>
-    <button type="button" class="btn btn-dark mt-3">Voltar</button>
+    <button
+      type="button"
+      class="btn btn-primary mr-2 mt-3"
+      (click)="editPosition()"
+      [disabled]="!form.valid"
+    >
+      Salvar
+    </button>
+    <button type="button" class="btn btn-dark mt-3" (click)="backRoute()">
+      Voltar
+    </button>
   </form>
+  <div class="alert alert-success" role="alert" *ngIf="alertFlag">
+    Salvo com sucesso!
+  </div>
 </div>

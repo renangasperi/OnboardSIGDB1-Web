@@ -16,7 +16,7 @@ export class EmployeeListComponent implements OnInit {
     this.form = this.fb.group({
       name: [''],
       cpf: ['', Validators.compose([EmployeeService.cpfValidate])],
-      hireDate: [''],
+      hiredate: [''],
     });
   }
 
@@ -25,6 +25,7 @@ export class EmployeeListComponent implements OnInit {
   }
 
   public employeeData: Employee[] = [];
+  public alertFlag: boolean = false;
 
   async getEmployee(filter?: EmployeeFilter) {
     await this.service
@@ -34,7 +35,16 @@ export class EmployeeListComponent implements OnInit {
   }
 
   deleteEmployeeData(employee: Employee): void {
-    this.service.deleteEmployee(employee.id);
-    this.getEmployee();
+    this.service.deleteEmployee(employee.id).subscribe(() => {
+      this.showAlert();
+      this.getEmployee();
+    });
+  }
+
+  showAlert() {
+    this.alertFlag = true;
+    setTimeout(() => {
+      this.alertFlag = false;
+    }, 2000);
   }
 }

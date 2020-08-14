@@ -2,14 +2,34 @@
   <div class="row justify-content-between">
     <h2 class="position-register__title">{{ title }}</h2>
   </div>
-  <form>
+  <form class="needs-validation" novalidate [formGroup]="form">
     <div class="row">
       <div class="col-12 d-flex flex-column">
-        <label for="description" class="position-register__input-label">Descrição</label>
-        <input type="text" class="position-register__input" id="description" />
+        <label class="position-register__input-label">Descrição</label>
+        <input
+          type="text"
+          class="position-register__input form-control"
+          [ngClass]="{ 'is-invalid': form.controls.description.invalid }"
+          formControlName="description"
+        />
+        <div *ngIf="form.controls.description.invalid" class="invalid-feedback">
+          Campo Obrigatório
+        </div>
       </div>
     </div>
-    <button type="button" class="btn btn-primary mr-2 mt-3">Salvar</button>
-    <button type="button" class="btn btn-dark mt-3">Voltar</button>
+    <button
+      type="button"
+      class="btn btn-primary mr-2 mt-3"
+      (click)="handleSubmit()"
+      [disabled]="!form.valid"
+    >
+      Salvar
+    </button>
+    <button type="button" class="btn btn-dark mt-3" (click)="backRoute()">
+      Voltar
+    </button>
   </form>
+  <div class="alert alert-success" role="alert" *ngIf="alertFlag">
+    Salvo com sucesso!
+  </div>
 </div>

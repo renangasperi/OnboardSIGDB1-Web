@@ -9,27 +9,29 @@
         <input
           type="text"
           class="company-register__input form-control"
+          [ngClass]="{ 'is-invalid': form.controls.name.invalid }"
           formControlName="name"
         />
+        <div *ngIf="form.controls.name.invalid" class="invalid-feedback">
+          Campo Obrigatório
+        </div>
       </div>
       <div class="col-6 col-md-9 d-flex flex-column mt-3">
         <label class="company-register__input-label">CNPJ</label>
         <input
           type="text"
           class="company-register__input form-control"
+          [ngClass]="{ 'is-invalid': form.controls.cnpj.invalid }"
           formControlName="cnpj"
-          [ngClass]="{'is-invalid': !form.valid}"
           placeholder="00.000.000/0000"
           mask="CPF_CNPJ"
         />
-        <div class="invalid-feedback">
-              CNPJ está inválido.
-            </div>
+        <div *ngIf="form.controls.cnpj.invalid" class="invalid-feedback">
+          CNPJ está inválido.
+        </div>
       </div>
       <div class="col-6 col-md-3 d-flex flex-column mt-3">
-        <label class="company-register__input-label"
-          >Data Fundação</label
-        >
+        <label class="company-register__input-label">Data Fundação</label>
         <input
           type="date"
           class="company-register__input form-control"
@@ -37,7 +39,19 @@
         />
       </div>
     </div>
-    <button type="button" class="btn btn-primary mr-2 mt-3">Salvar</button>
-    <button type="button" class="btn btn-dark mt-3">Voltar</button>
+    <button
+      type="button"
+      class="btn btn-primary mr-2 mt-3"
+      (click)="handleSubmit()"
+      [disabled]="!form.valid"
+    >
+      Salvar
+    </button>
+    <button type="button" class="btn btn-dark mt-3" (click)="backRoute()">
+      Voltar
+    </button>
   </form>
+  <div class="alert alert-success" role="alert" *ngIf="alertFlag">
+    Salvo com sucesso!
+  </div>
 </div>

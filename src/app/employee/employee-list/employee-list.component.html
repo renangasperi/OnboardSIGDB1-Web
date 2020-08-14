@@ -28,25 +28,29 @@
               type="text"
               class="employee-list__input form-control"
               formControlName="cpf"
-              [ngClass]="{ 'is-invalid': !form.valid }"
+              [ngClass]="{ 'is-invalid': form.controls.cpf.invalid }"
               placeholder="000.000.000-00"
               mask="CPF_CNPJ"
             />
-            <div class="invalid-feedback">
+            <div *ngIf="form.controls.cpf.invalid" class="invalid-feedback">
               CPF está inválido.
             </div>
           </div>
           <div class="col-12 col-lg-4 d-flex flex-column">
             <label class="employee-list__input-label">Data Contratação</label>
             <input
-              type="text"
+              type="date"
               class="employee-list__input form-control"
-              formControlName="hireDate"
+              formControlName="hiredate"
             />
           </div>
         </div>
       </div>
-      <button class="employee-list__action-button col-12 col-lg-2 col-xl-1">
+      <button
+        type="submit"
+        class="employee-list__action-button col-12 col-lg-2 col-xl-1"
+        (click)="getEmployee(form.value)"
+      >
         Filtrar
       </button>
     </div>
@@ -63,10 +67,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let employee of employeeData" class="employee-list__table-row">
+      <tr
+        *ngFor="let employee of employeeData"
+        class="employee-list__table-row"
+      >
         <th scope="row">{{ employee.id }}</th>
         <td>{{ employee.name }}</td>
-        <td><span mask="CPF_CNPJ">{{ employee.cpf }}</span></td>
+        <td>{{ employee.cpf | mask: "CPF_CNPJ" }}</td>
         <td>{{ employee.company.name }}</td>
         <td>{{ employee.position.description }}</td>
         <td align="right">
@@ -85,24 +92,29 @@
               <button
                 class="dropdown-item"
                 type="button"
-                routerLink="/employee/edit"
+                [routerLink]="['/employee/edit', employee.id]"
               >
                 Editar
               </button>
-              <button class="dropdown-item" type="button">
+              <button
+                class="dropdown-item"
+                type="button"
+                (click)="deleteEmployeeData(employee)"
+              >
                 Excluir
               </button>
               <button
                 class="dropdown-item"
                 type="button"
-                routerLink="/employee/edit-company"
+                [routerLink]="['/employee/edit-company', employee.id]"
               >
                 Vincular Empresa
               </button>
               <button
                 class="dropdown-item"
                 type="button"
-                routerLink="/employee/edit-position"
+                [routerLink]="['/employee/edit-position', employee.id]"
+                [disabled]="!employee.company.id"
               >
                 Vincular Cargo
               </button>
@@ -112,4 +124,7 @@
       </tr>
     </tbody>
   </table>
+  <div class="alert alert-success" role="alert" *ngIf="alertFlag">
+    Excluído com sucesso!
+  </div>
 </div>

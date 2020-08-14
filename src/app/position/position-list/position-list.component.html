@@ -19,7 +19,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let position of mock" class="position-list__table-row">
+      <tr
+        *ngFor="let position of positionData"
+        class="position-list__table-row"
+      >
         <th scope="row">{{ position.id }}</th>
         <td>{{ position.description }}</td>
         <td align="right">
@@ -38,11 +41,15 @@
               <button
                 class="dropdown-item"
                 type="button"
-                routerLink="/position/edit"
+                [routerLink]="['/position/edit', position.id]"
               >
                 Editar
               </button>
-              <button class="dropdown-item" type="button">
+              <button
+                class="dropdown-item"
+                type="button"
+                (click)="deletePositionData(position)"
+              >
                 Excluir
               </button>
             </div>
@@ -51,4 +58,7 @@
       </tr>
     </tbody>
   </table>
+  <div class="alert alert-success" role="alert" *ngIf="alertFlag">
+    Excluído com sucesso!
+  </div>
 </div>

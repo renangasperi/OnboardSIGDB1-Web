@@ -39,11 +39,11 @@ const routes: Routes = [
     component: EmployeeRegisterComponent,
   },
   {
-    path: 'employee/edit-company',
+    path: 'employee/edit-company/:id',
     component: EditEmployeeCompanyComponent,
   },
   {
-    path: 'employee/edit-position',
+    path: 'employee/edit-position/:id',
     component: EditEmployeePositionComponent,
   },
   {
@@ -55,7 +55,7 @@ const routes: Routes = [
     component: PositionRegisterComponent,
   },
   {
-    path: 'position/edit',
+    path: 'position/edit/:id',
     component: PositionRegisterComponent,
   },
 ];

@@ -28,11 +28,11 @@
               type="text"
               class="company-list__input form-control"
               formControlName="cnpj"
-              [ngClass]="{'is-invalid': !form.valid}"
+              [ngClass]="{'is-invalid': form.controls.cnpj.invalid}"
               placeholder="00.000.000/0000-00"
               mask="CPF_CNPJ"
             />
-            <div class="invalid-feedback">
+            <div *ngIf="form.controls.cnpj.invalid" class="invalid-feedback">
               CNPJ está inválido.
             </div>
           </div>
@@ -69,8 +69,8 @@
       <tr *ngFor="let company of companyData" class="company-list__table-row">
         <th scope="row">{{ company.id }}</th>
         <td>{{ company.name }}</td>
-        <td mask="CPF_CNPJ">{{ company.cnpj }}</td>
-        <td>{{ company.foundationDate }}</td>
+        <td>{{ company.cnpj | mask: 'CPF_CNPJ' }}</td>
+        <td>{{ company.foundationDate | date: 'dd/MM/yyyy'}}</td>
         <td align="right">
           <div class="dropdown">
             <button
@@ -104,4 +104,7 @@
       </tr>
     </tbody>
   </table>
+  <div class="alert alert-success" role="alert" *ngIf="alertFlag">
+    Excluído com sucesso!
+  </div>
 </div>

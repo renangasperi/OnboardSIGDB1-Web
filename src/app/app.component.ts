@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewChecked } from '@angular/core';
 import { NavigationTab } from '../models/navigation-tab.model';
 import { Router } from '@angular/router';
 
@@ -7,10 +7,10 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements AfterViewChecked {
   constructor(private router: Router){}
 
-  ngAfterViewInit(): void {
+  ngAfterViewChecked(): void {
     this.checkCurrentTab();
   }
 
@@ -40,7 +40,6 @@ export class AppComponent implements AfterViewInit {
 
   checkCurrentTab() {
     const { url } = this.router;
-    console.log(url, 'socorro');
     this.tabs.map(tab => {
       if (tab.route === url) {
         this.currentTab = tab;
