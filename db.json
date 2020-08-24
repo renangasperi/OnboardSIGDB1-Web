@@ -5,12 +5,6 @@
       "cnpj": "00000000000000",
       "foundationDate": "1995-02-01",
       "id": 1
-    },
-    {
-      "name": "31231",
-      "cnpj": "00000000000000",
-      "foundationDate": "",
-      "id": 2
     }
   ],
   "employee": [
@@ -26,34 +20,6 @@
       "position": {
         "id": "1",
         "description": "desenvolvedor"
-      }
-    },
-    {
-      "name": "augusto",
-      "cpf": "08358688938",
-      "hiredate": "2564-04-12",
-      "id": 2,
-      "company": {
-        "id": 2,
-        "name": "eqweqwe"
-      },
-      "position": {
-        "id": "3",
-        "description": "cara das tela"
-      }
-    },
-    {
-      "name": "dasdasd",
-      "cpf": "08358688938",
-      "hiredate": "",
-      "id": 3,
-      "company": {
-        "id": 2,
-        "name": "nova412421"
-      },
-      "position": {
-        "id": "2",
-        "description": "frentista"
       }
     }
   ],

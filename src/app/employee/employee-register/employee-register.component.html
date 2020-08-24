@@ -9,10 +9,10 @@
         <input
           type="text"
           class="employee-register__input form-control"
-          [ngClass]="{ 'is-invalid': form.controls.name.invalid }"
+          [ngClass]="{ 'is-invalid': form.controls.name.invalid && (form.controls.name.touched || form.controls.name.dirty) }"
           formControlName="name"
         />
-        <div *ngIf="form.controls.name.invalid" class="invalid-feedback">
+        <div *ngIf="form.controls.name.invalid && (form.controls.name.touched || form.controls.name.dirty)" class="invalid-feedback">
           Campo Obrigatório
         </div>
       </div>
@@ -22,11 +22,11 @@
           type="text"
           class="employee-register__input form-control"
           formControlName="cpf"
-          [ngClass]="{ 'is-invalid': form.controls.cpf.invalid }"
-          placeholder="00.000.000/0000"
+          [ngClass]="{ 'is-invalid': form.controls.cpf.invalid && (form.controls.cpf.touched || form.controls.cpf.dirty) }"
+          placeholder="000.000.000-00"
           mask="CPF_CNPJ"
         />
-        <div *ngIf="form.controls.cpf.invalid" class="invalid-feedback">
+        <div *ngIf="form.controls.cpf.invalid && (form.controls.cpf.touched || form.controls.cpf.dirty)" class="invalid-feedback">
           CPF está inválido.
         </div>
       </div>

@@ -18,14 +18,11 @@ export class EmployeeRegisterComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private service: EmployeeService,
     private fb: FormBuilder,
-    private location: Location,
+    private location: Location
   ) {
     this.form = this.fb.group({
-      name: [
-        '',
-        Validators.compose([Validators.maxLength(150), Validators.required]),
-      ],
-      cpf: ['', Validators.compose([EmployeeService.cpfValidate, Validators.required])],
+      name: ['', [Validators.required, Validators.maxLength(150)]],
+      cpf: ['', [Validators.required, EmployeeService.cpfValidate]],
       hiredate: [''],
     });
   }
@@ -87,7 +84,7 @@ export class EmployeeRegisterComponent implements OnInit {
       .getAllEmployee()
       .toPromise()
       .then((resp) => {
-        const employeeBody = { ...this.form.value, id: resp.length + 1 };
+        const employeeBody = { ...this.form.value, id: (new Date()).getTime().toString() };
         this.service.createNewEmployee(employeeBody).subscribe();
         this.showAlert();
       });
