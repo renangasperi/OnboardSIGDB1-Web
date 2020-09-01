@@ -12,7 +12,7 @@
           type="text"
           class="edit-employee-company__input form-control"
           disabled
-          formControlName="name"
+          formControlName="nome"
         />
       </div>
       <div class="col-12 d-flex flex-column mt-3">
@@ -24,7 +24,7 @@
             formControlName="companyId"
           >
             <option [value]="company.id" *ngFor="let company of companyData">{{
-              company.name
+              company.nome
             }}</option>
           </select>
         </div>

@@ -11,7 +11,7 @@
         <input
           type="text"
           class="edit-employee-position__input form-control"
-          formControlName="name"
+          formControlName="nome"
         />
       </div>
       <div class="col-12 d-flex flex-column mt-3">
@@ -25,7 +25,7 @@
             <option
               [value]="position.id"
               *ngFor="let position of positionData"
-              >{{ position.description }}</option
+              >{{ position.descricao }}</option
             >
           </select>
         </div>

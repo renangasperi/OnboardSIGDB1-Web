@@ -7,7 +7,7 @@ import { Position } from 'src/models/position/position.model';
   providedIn: 'root',
 })
 export class PositionService {
-  private readonly API = 'http://localhost:3000/position';
+  private readonly API = 'http://localhost:5000/api/cargos';
 
   constructor(private http: HttpClient) {}
 
@@ -16,7 +16,7 @@ export class PositionService {
   }
 
   getPositionById(id: string): Observable<Position> {
-    return this.http.get<Position>(`${this.API}?id=${id}`);
+    return this.http.get<Position>(`${this.API}/${id}`);
   }
 
   createNewPosition(position: Position) {

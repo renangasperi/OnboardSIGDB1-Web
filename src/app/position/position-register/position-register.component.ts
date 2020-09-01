@@ -18,10 +18,10 @@ export class PositionRegisterComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private service: PositionService,
     private fb: FormBuilder,
-    private location: Location,
+    private location: Location
   ) {
     this.form = this.fb.group({
-      description: ['', Validators.compose([Validators.required])],
+      descricao: ['', Validators.compose([Validators.required])],
     });
   }
 
@@ -70,20 +70,15 @@ export class PositionRegisterComponent implements OnInit {
       .getPositionById(id)
       .toPromise()
       .then((resp) => {
-        this.position = resp[0];
-        this.form.get('description').setValue(this.position.description);
+        this.position = resp;
+        this.form.get('descricao').setValue(this.position.descricao);
       });
   }
 
   createNewPosition() {
-    this.service
-      .getAllPosition()
-      .toPromise()
-      .then((resp) => {
-        const positionBody = { ...this.form.value, id: resp.length + 1 };
-        this.service.createNewPosition(positionBody).subscribe();
-        this.showAlert();
-      });
+    const { value } = this.form;
+    this.service.createNewPosition(value).subscribe();
+    this.showAlert();
   }
 
   editPosition() {

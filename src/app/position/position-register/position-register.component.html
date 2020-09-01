@@ -9,10 +9,17 @@
         <input
           type="text"
           class="position-register__input form-control"
-          [ngClass]="{ 'is-invalid': form.controls.description.invalid }"
-          formControlName="description"
+          [ngClass]="{
+            'is-invalid':
+              form.controls.descricao.invalid &&
+              (form.controls.descricao.touched || form.controls.descricao.dirty)
+          }"
+          formControlName="descricao"
         />
-        <div *ngIf="form.controls.description.invalid" class="invalid-feedback">
+        <div *ngIf="
+            form.controls.descricao.invalid &&
+            (form.controls.descricao.touched || form.controls.descricao.dirty)
+          " class="invalid-feedback">
           Campo Obrigatório
         </div>
       </div>

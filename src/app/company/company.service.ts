@@ -9,7 +9,7 @@ import { AbstractControl } from '@angular/forms';
   providedIn: 'root',
 })
 export class CompanyService {
-  private readonly API = 'http://localhost:3000/company';
+  private readonly API = 'http://localhost:5000/api/empresas';
 
   constructor(private http: HttpClient) {}
 
@@ -19,7 +19,7 @@ export class CompanyService {
   }
 
   getCompanyById(id: string): Observable<Company> {
-    return this.http.get<Company>(`${this.API}?id=${id}`)
+    return this.http.get<Company>(`${this.API}/${id}`)
   }
 
   createNewCompany(company: Company) {

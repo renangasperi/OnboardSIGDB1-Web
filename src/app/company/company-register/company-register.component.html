@@ -9,10 +9,20 @@
         <input
           type="text"
           class="company-register__input form-control"
-          [ngClass]="{ 'is-invalid': form.controls.name.invalid }"
-          formControlName="name"
+          [ngClass]="{
+            'is-invalid':
+              form.controls.nome.invalid &&
+              (form.controls.nome.touched || form.controls.nome.dirty)
+          }"
+          formControlName="nome"
         />
-        <div *ngIf="form.controls.name.invalid" class="invalid-feedback">
+        <div
+          *ngIf="
+            form.controls.nome.invalid &&
+            (form.controls.nome.touched || form.controls.nome.dirty)
+          "
+          class="invalid-feedback"
+        >
           Campo Obrigatório
         </div>
       </div>
@@ -21,12 +31,22 @@
         <input
           type="text"
           class="company-register__input form-control"
-          [ngClass]="{ 'is-invalid': form.controls.cnpj.invalid }"
+          [ngClass]="{
+            'is-invalid':
+              form.controls.cnpj.invalid &&
+              (form.controls.cnpj.touched || form.controls.cnpj.dirty)
+          }"
           formControlName="cnpj"
           placeholder="00.000.000/0000"
           mask="CPF_CNPJ"
         />
-        <div *ngIf="form.controls.cnpj.invalid" class="invalid-feedback">
+        <div
+          *ngIf="
+            form.controls.cnpj.invalid &&
+            (form.controls.cnpj.touched || form.controls.cnpj.dirty)
+          "
+          class="invalid-feedback"
+        >
           CNPJ está inválido.
         </div>
       </div>
@@ -35,7 +55,7 @@
         <input
           type="date"
           class="company-register__input form-control"
-          formControlName="foundationDate"
+          formControlName="dataFundacao"
         />
       </div>
     </div>

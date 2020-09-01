@@ -1,7 +1,7 @@
 export class CompanyFilter {
   constructor(
-    public name: string,
+    public nome: string,
     public cnpj: string,
-    public foundationDate: string,
+    public dataFundacao: string,
   ) {}
 }

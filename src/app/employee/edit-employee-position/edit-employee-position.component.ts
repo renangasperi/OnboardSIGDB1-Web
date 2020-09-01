@@ -26,7 +26,7 @@ export class EditEmployeePositionComponent implements OnInit {
     private location: Location
   ) {
     this.form = this.fb.group({
-      name: [''],
+      nome: [''],
       positionId: ['', Validators.compose([Validators.required])],
     });
   }
@@ -51,8 +51,8 @@ export class EditEmployeePositionComponent implements OnInit {
       .getEmployeeById(id)
       .toPromise()
       .then((resp) => {
-        this.employee = resp[0];
-        this.form.get('name').setValue(this.employee.name);
+        this.employee = resp;
+        this.form.get('nome').setValue(this.employee.nome);
       });
   }
 

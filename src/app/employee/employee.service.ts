@@ -11,7 +11,7 @@ import { Position } from 'src/models/position/position.model';
   providedIn: 'root',
 })
 export class EmployeeService {
-  private readonly API = 'http://localhost:3000/employee';
+  private readonly API = 'http://localhost:5000/api/funcionarios';
 
   constructor(private http: HttpClient) {}
 
@@ -21,16 +21,11 @@ export class EmployeeService {
   }
 
   getEmployeeById(id: string): Observable<Employee> {
-    return this.http.get<Employee>(`${this.API}?id=${id}`);
+    return this.http.get<Employee>(`${this.API}/${id}`);
   }
 
   createNewEmployee(employee: Employee) {
-    const body = {
-      ...employee,
-      company: { id: '', name: '' },
-      position: { id: '', description: ''}
-    }
-    return this.http.post(this.API, body);
+    return this.http.post(this.API, employee);
   }
 
   editEmployee(employee: Employee) {
@@ -38,19 +33,11 @@ export class EmployeeService {
   }
 
   editCompany(employee: Employee, company: Company) {
-    const body = {
-      ...employee,
-      company: { id: company.id, name: company.name },
-    }
-    return this.http.put(`${this.API}/${employee.id}`, body);
+    return this.http.put(`${this.API}/${employee.id}/vincularempresa/${company.id}`, {});
   }
 
   editPosition(employee: Employee, position: Position) {
-    const body = {
-      ...employee,
-      position: { id: position.id, description: position.description },
-    }
-    return this.http.put(`${this.API}/${employee.id}`, body);
+    return this.http.put(`${this.API}/${employee.id}/atribuircargo/${position.id}`, {});
   }
 
   deleteEmployee(employeeId: string) {

@@ -21,9 +21,9 @@ export class EmployeeRegisterComponent implements OnInit {
     private location: Location
   ) {
     this.form = this.fb.group({
-      name: ['', [Validators.required, Validators.maxLength(150)]],
+      nome: ['', [Validators.required, Validators.maxLength(150)]],
       cpf: ['', [Validators.required, EmployeeService.cpfValidate]],
-      hiredate: [''],
+      dataContratacao: [''],
     });
   }
 
@@ -72,22 +72,19 @@ export class EmployeeRegisterComponent implements OnInit {
       .getEmployeeById(id)
       .toPromise()
       .then((resp) => {
-        this.employee = resp[0];
-        this.form.get('name').setValue(this.employee.name);
+        this.employee = resp;
+        this.form.get('nome').setValue(this.employee.nome);
         this.form.get('cpf').setValue(this.employee.cpf);
-        this.form.get('hiredate').setValue(this.employee.hiredate);
+        this.form
+          .get('dataContratacao')
+          .setValue(this.employee.dataContratacao);
       });
   }
 
   createNewEmployee() {
-    this.service
-      .getAllEmployee()
-      .toPromise()
-      .then((resp) => {
-        const employeeBody = { ...this.form.value, id: (new Date()).getTime().toString() };
-        this.service.createNewEmployee(employeeBody).subscribe();
-        this.showAlert();
-      });
+    const { value } = this.form;
+    this.service.createNewEmployee(value).subscribe();
+    this.showAlert();
   }
 
   editEmployee() {

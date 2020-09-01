@@ -19,7 +19,7 @@
             <input
               type="text"
               class="employee-list__input form-control"
-              formControlName="name"
+              formControlName="nome"
             />
           </div>
           <div class="col-4 d-flex flex-column">
@@ -41,14 +41,14 @@
             <input
               type="date"
               class="employee-list__input form-control"
-              formControlName="hiredate"
+              formControlName="dataContratacao"
             />
           </div>
         </div>
       </div>
       <button
         type="submit"
-        class="employee-list__action-button col-2 col-xl-1"
+        class="employee-list__action-button col-1"
         (click)="getEmployee(form.value)"
       >
         Filtrar
@@ -72,10 +72,10 @@
         class="employee-list__table-row"
       >
         <th scope="row">{{ employee.id }}</th>
-        <td>{{ employee.name }}</td>
+        <td>{{ employee.nome }}</td>
         <td>{{ employee.cpf | mask: "CPF_CNPJ" }}</td>
-        <td>{{ employee.company.name }}</td>
-        <td>{{ employee.position.description }}</td>
+        <td>{{ employee.empresa }}</td>
+        <td>{{ employee.cargo }}</td>
         <td align="right">
           <div class="dropdown">
             <button
@@ -114,7 +114,7 @@
                 class="dropdown-item"
                 type="button"
                 [routerLink]="['/employee/edit-position', employee.id]"
-                [disabled]="!employee.company.id"
+                [disabled]="!employee.empresa"
               >
                 Vincular Cargo
               </button>

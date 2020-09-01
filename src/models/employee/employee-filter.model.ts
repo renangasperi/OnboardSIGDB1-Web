@@ -1,7 +1,7 @@
 export class EmployeeFilter {
   constructor(
-    public name: string,
+    public nome: string,
     public cpf: string,
-    public hiredate: string,
+    public dataContratacao: string,
   ) {}
 }

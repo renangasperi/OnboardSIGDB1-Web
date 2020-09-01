@@ -18,15 +18,18 @@ export class CompanyRegisterComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private service: CompanyService,
     private fb: FormBuilder,
-    private location: Location,
+    private location: Location
   ) {
     this.form = this.fb.group({
-      name: [
+      nome: [
         '',
         Validators.compose([Validators.maxLength(150), Validators.required]),
       ],
-      cnpj: ['', Validators.compose([CompanyService.cnpjValidate, Validators.required])],
-      foundationDate: [''],
+      cnpj: [
+        '',
+        Validators.compose([CompanyService.cnpjValidate, Validators.required]),
+      ],
+      dataFundacao: [''],
     });
   }
 
@@ -75,22 +78,17 @@ export class CompanyRegisterComponent implements OnInit {
       .getCompanyById(id)
       .toPromise()
       .then((resp) => {
-        this.company = resp[0];
-        this.form.get('name').setValue(this.company.name);
+        this.company = resp;
+        this.form.get('nome').setValue(this.company.nome);
         this.form.get('cnpj').setValue(this.company.cnpj);
-        this.form.get('foundationDate').setValue(this.company.foundationDate);
+        this.form.get('dataFundacao').setValue(this.company.dataFundacao);
       });
   }
 
   createNewCompany() {
-    this.service
-      .getAllCompany()
-      .toPromise()
-      .then((resp) => {
-        const companyBody = { ...this.form.value, id: resp.length + 1 };
-        this.service.createNewCompany(companyBody).subscribe();
-        this.showAlert();
-      });
+    const { value } = this.form;
+    this.service.createNewCompany(value).subscribe();
+    this.showAlert();
   }
 
   editCompany() {

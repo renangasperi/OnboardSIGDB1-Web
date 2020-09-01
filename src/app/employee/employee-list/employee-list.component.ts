@@ -14,9 +14,9 @@ export class EmployeeListComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private service: EmployeeService) {
     this.form = this.fb.group({
-      name: [''],
+      nome: [''],
       cpf: ['', Validators.compose([EmployeeService.cpfValidate])],
-      hiredate: [''],
+      dataContratacao: [''],
     });
   }
 

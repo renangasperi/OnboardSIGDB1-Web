@@ -14,9 +14,9 @@ export class CompanyListComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private service: CompanyService) {
     this.form = this.fb.group({
-      name: ['',],
+      nome: ['',],
       cnpj: ['', Validators.compose([CompanyService.cnpjValidate])],
-      foundationDate: [''],
+      dataFundacao: [''],
     });
   }
 

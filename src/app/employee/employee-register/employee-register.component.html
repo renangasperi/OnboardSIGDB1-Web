@@ -9,10 +9,20 @@
         <input
           type="text"
           class="employee-register__input form-control"
-          [ngClass]="{ 'is-invalid': form.controls.name.invalid && (form.controls.name.touched || form.controls.name.dirty) }"
-          formControlName="name"
+          [ngClass]="{
+            'is-invalid':
+              form.controls.nome.invalid &&
+              (form.controls.nome.touched || form.controls.nome.dirty)
+          }"
+          formControlName="nome"
         />
-        <div *ngIf="form.controls.name.invalid && (form.controls.name.touched || form.controls.name.dirty)" class="invalid-feedback">
+        <div
+          *ngIf="
+            form.controls.nome.invalid &&
+            (form.controls.nome.touched || form.controls.nome.dirty)
+          "
+          class="invalid-feedback"
+        >
           Campo Obrigatório
         </div>
       </div>
@@ -22,11 +32,21 @@
           type="text"
           class="employee-register__input form-control"
           formControlName="cpf"
-          [ngClass]="{ 'is-invalid': form.controls.cpf.invalid && (form.controls.cpf.touched || form.controls.cpf.dirty) }"
+          [ngClass]="{
+            'is-invalid':
+              form.controls.cpf.invalid &&
+              (form.controls.cpf.touched || form.controls.cpf.dirty)
+          }"
           placeholder="000.000.000-00"
           mask="CPF_CNPJ"
         />
-        <div *ngIf="form.controls.cpf.invalid && (form.controls.cpf.touched || form.controls.cpf.dirty)" class="invalid-feedback">
+        <div
+          *ngIf="
+            form.controls.cpf.invalid &&
+            (form.controls.cpf.touched || form.controls.cpf.dirty)
+          "
+          class="invalid-feedback"
+        >
           CPF está inválido.
         </div>
       </div>
@@ -35,7 +55,7 @@
         <input
           type="date"
           class="employee-register__input form-control"
-          formControlName="hiredate"
+          formControlName="dataContratacao"
         />
       </div>
     </div>
